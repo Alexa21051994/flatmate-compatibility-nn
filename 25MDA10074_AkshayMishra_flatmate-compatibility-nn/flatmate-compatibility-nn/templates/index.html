@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flatmate Compatibility Predictor</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --ink:#1c2430; --muted:#5d6b7c; --line:#dfe4ea;
+          --a:#2a6fdb; --b:#d9622b; --good:#1f8a5b; --mid:#c28a14; --bad:#c23b3b; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:28px 20px 8px; max-width:1100px; margin:auto; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  header p { margin:0; color:var(--muted); }
+  main { max-width:1100px; margin:auto; padding:16px 20px 60px; display:grid; gap:20px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:800px){ .grid{grid-template-columns:1fr;} }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; }
+  .card h2 { font-size:17px; margin:0 0 12px; display:flex; align-items:center; gap:8px; }
+  .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .row { display:grid; grid-template-columns:150px 1fr 24px; align-items:center; gap:8px; margin:6px 0; }
+  .row label { font-size:13.5px; } .row output { font-weight:600; text-align:right; }
+  input[type=range] { width:100%; }
+  .a input[type=range]{accent-color:var(--a);} .b input[type=range]{accent-color:var(--b);}
+  .opts { display:grid; grid-template-columns:150px 1fr; gap:8px; margin:8px 0; align-items:center; font-size:13.5px; }
+  select,input[type=number]{ padding:5px 8px; border:1px solid var(--line); border-radius:6px; font:inherit; width:100%; }
+  .hob { display:flex; flex-wrap:wrap; gap:6px 12px; font-size:13px; }
+  button { background:var(--ink); color:#fff; border:0; border-radius:8px; padding:12px 22px; font:600 15px inherit; cursor:pointer; justify-self:start; }
+  button:hover { opacity:.9; }
+  #result { display:none; }
+  .score { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+  .score .n { font-size:56px; font-weight:700; line-height:1; }
+  .pill { padding:3px 12px; border-radius:99px; color:#fff; font-weight:600; font-size:14px; }
+  .meter { height:10px; background:var(--line); border-radius:6px; margin:14px 0 4px; overflow:hidden; }
+  .meter > div { height:100%; transition:width .4s; }
+  ul { margin:8px 0 0; padding-left:20px; }
+  small, .note { color:var(--muted); font-size:12.5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Flatmate Compatibility Predictor</h1>
+  <p>Answer the same lifestyle questions for two people. A neural network trained on pair data estimates how well they would live together (0–100).</p>
+</header>
+<main>
+<form id="f" class="grid">
+  {% for p, label, color in [("a","Person A","var(--a)"),("b","Person B","var(--b)")] %}
+  <section class="card {{p}}">
+    <h2><span class="dot" style="background:{{color}}"></span>{{label}}</h2>
+    {% for key,(name,desc) in traits.items() %}
+    <div class="row" title="{{desc}}">
+      <label for="{{p}}_{{key}}">{{name}}</label>
+      <input type="range" min="1" max="5" step="1" value="3" id="{{p}}_{{key}}" name="{{p}}_{{key}}"
+             oninput="this.nextElementSibling.value=this.value">
+      <output>3</output>
+    </div>
+    {% endfor %}
+    <div class="opts"><span>Smokes</span><select name="{{p}}_smoker"><option value="0">No</option><option value="1">Yes</option></select></div>
+    <div class="opts"><span>Has a pet</span><select name="{{p}}_has_pet"><option value="0">No</option><option value="1">Yes</option></select></div>
+    <div class="opts"><span>Occupation</span><select name="{{p}}_occupation"><option value="0">Student</option><option value="1">Working professional</option></select></div>
+    <div class="opts"><span>Diet</span><select name="{{p}}_diet">{% for k,v in diets.items() %}<option value="{{k}}" {% if k==2 %}selected{% endif %}>{{v}}</option>{% endfor %}</select></div>
+    <div class="opts"><span>Rent budget (₹ '000/mo)</span><input type="number" name="{{p}}_budget_k" value="9" min="1" max="60" step="0.5"></div>
+    <div class="opts"><span>Hobbies</span>
+      <div class="hob">{% for h in hobbies %}<label><input type="checkbox" name="{{p}}_hobby_{{h}}"> {{h.replace('_',' ')}}</label>{% endfor %}</div>
+    </div>
+  </section>
+  {% endfor %}
+</form>
+<button type="button" onclick="run()">Predict compatibility</button>
+
+<section class="card" id="result">
+  <div class="score"><span class="n" id="n">–</span><span class="pill" id="pill"></span></div>
+  <div class="meter"><div id="bar"></div></div>
+  <h3 style="margin:16px 0 0;font-size:15px">Likely friction points</h3>
+  <ul id="fr"></ul>
+  <p class="note">Friction points are found by asking the network how much the score would rise if the two people gave identical answers for that topic. This is a model estimate from simulated training data, not advice about real people.</p>
+</section>
+</main>
+<script>
+async function run(){
+  const r = await fetch('/predict',{method:'POST',body:new FormData(document.getElementById('f'))});
+  const d = await r.json();
+  const col = d.band==='High'?'var(--good)':d.band==='Moderate'?'var(--mid)':'var(--bad)';
+  document.getElementById('result').style.display='block';
+  document.getElementById('n').textContent=d.score.toFixed(0);
+  const pill=document.getElementById('pill'); pill.textContent=d.band+' compatibility'; pill.style.background=col;
+  const bar=document.getElementById('bar'); bar.style.width=d.score+'%'; bar.style.background=col;
+  document.getElementById('fr').innerHTML = d.friction.length
+    ? d.friction.map(f=>`<li><b>${f.trait}</b> <small>(aligning this would add about +${f.gain.toFixed(1)} points)</small></li>`).join('')
+    : '<li>No major friction detected.</li>';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

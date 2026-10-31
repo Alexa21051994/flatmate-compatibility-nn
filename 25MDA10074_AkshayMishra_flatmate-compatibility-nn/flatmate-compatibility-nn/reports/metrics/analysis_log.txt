@@ -1,0 +1,93 @@
+{'train_people': 126, 'train_pairs': 247, 'test_MAE': 14.860776398280903}
+{'train_people': 315, 'train_pairs': 1525, 'test_MAE': 7.13945464530575}
+{'train_people': 630, 'train_pairs': 5948, 'test_MAE': 3.7192298716028427}
+{'train_people': 945, 'train_pairs': 13504, 'test_MAE': 3.4738200072781416}
+{'train_people': 1260, 'train_pairs': 24000, 'test_MAE': 3.398479803028495}
+{
+  "residual_mean": -0.2169421878684098,
+  "residual_sd": 4.158838079038279,
+  "within_5": 0.772,
+  "within_10": 0.9842,
+  "confusion": [
+    [
+      532,
+      193,
+      0
+    ],
+    [
+      127,
+      2473,
+      188
+    ],
+    [
+      0,
+      282,
+      1205
+    ]
+  ],
+  "mae_by_band": {
+    "Low": 3.439521993601194,
+    "Moderate": 3.207843076563642,
+    "High": 3.4832844141794705
+  },
+  "n_by_band": {
+    "Low": 725,
+    "Moderate": 2788,
+    "High": 1487
+  },
+  "permutation_importance": {
+    "AC preference": 0.0,
+    "Cooking": 0.051658643134256575,
+    "Guests": 0.06760772471192578,
+    "Occupation": 0.07705380447723664,
+    "Time at home": 0.08897264377791991,
+    "Extraversion": 0.20724438727269132,
+    "Alcohol": 0.2345347721793735,
+    "Noise": 0.3313597564489877,
+    "Sleep schedule": 0.3839214904796912,
+    "Bill responsibility": 0.4633113686903501,
+    "Chore sharing": 0.48902272829745047,
+    "Cleanliness": 0.8770884022727158,
+    "Hobbies": 1.0950944996831427,
+    "Budget": 1.2385023528534012,
+    "Pets": 2.1874925744847995,
+    "Diet & kitchen": 2.3867227920004828,
+    "Smoking": 5.145604571381274
+  },
+  "max_symmetry_gap": 0.0,
+  "learning_curve": [
+    {
+      "train_people": 126,
+      "train_pairs": 247,
+      "test_MAE": 14.860776398280903
+    },
+    {
+      "train_people": 315,
+      "train_pairs": 1525,
+      "test_MAE": 7.13945464530575
+    },
+    {
+      "train_people": 630,
+      "train_pairs": 5948,
+      "test_MAE": 3.7192298716028427
+    },
+    {
+      "train_people": 945,
+      "train_pairs": 13504,
+      "test_MAE": 3.4738200072781416
+    },
+    {
+      "train_people": 1260,
+      "train_pairs": 24000,
+      "test_MAE": 3.398479803028495
+    }
+  ],
+  "scenarios": {
+    "Identical twins": 90.3,
+    "Smoker with smoke-intolerant flatmate": 69.4,
+    "Tidy vs messy": 68.3,
+    "Early bird vs night owl": 80.6,
+    "Pet owner vs pet-averse": 78.6,
+    "Budget Rs 6k vs Rs 20k": 78.3
+  }
+}

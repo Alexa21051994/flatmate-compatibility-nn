@@ -1,0 +1,38 @@
+[01:18:35] train 24000 | val 5000 | test 5000 pairs
+[01:18:35] Mean predictor                     val MAE 9.757 | test MAE 9.758 | test R2 -0.0058
+[01:18:35] Linear regression (raw A|B)        val MAE 7.329 | test MAE 7.527 | test R2 0.3506
+[01:18:35] Ridge (pair features)              val MAE 3.476 | test MAE 3.515 | test R2 0.8642
+[01:19:08] Random Forest                      val MAE 3.800 | test MAE 3.797 | test R2 0.8407
+[01:19:14] Gradient Boosting                  val MAE 3.339 | test MAE 3.397 | test R2 0.8736
+[01:19:29] ANN v1: plain MLP on [A|B]         val MAE 4.477 | test MAE 4.405 | test R2 0.7849
+[01:19:53] ANN v2: + swap aug + symmetry      val MAE 3.581 | test MAE 3.609 | test R2 0.8581
+[01:21:21] ANN v3: + pair features            val MAE 4.128 | test MAE 4.162 | test R2 0.8107
+[01:21:52] ANN v4: + person-disjoint stopping val MAE 3.515 | test MAE 3.546 | test R2 0.8625
+[01:22:08] trial  1/24 val MAE 3.353 (16s) {'hidden': (64,), 'alpha': 0.003436169187367442, 'lr': 0.0031771453808952226, 'batch_size': 512, 'activation': 'relu'}
+[01:22:44] trial  2/24 val MAE 3.678 (36s) {'hidden': (256, 128, 64), 'alpha': 0.0002136095758183536, 'lr': 0.004633095927482707, 'batch_size': 512, 'activation': 'tanh'}
+[01:23:06] trial  3/24 val MAE 3.627 (21s) {'hidden': (128, 128, 64), 'alpha': 0.00028080039499167765, 'lr': 0.0008521976123008277, 'batch_size': 512, 'activation': 'tanh'}
+[01:23:30] trial  4/24 val MAE 3.445 (24s) {'hidden': (128, 64), 'alpha': 0.1752578424730859, 'lr': 0.001590051416704593, 'batch_size': 256, 'activation': 'tanh'}
+[01:24:13] trial  5/24 val MAE 3.550 (43s) {'hidden': (256, 128), 'alpha': 0.0006242169053224699, 'lr': 0.0011923910341633606, 'batch_size': 256, 'activation': 'tanh'}
+[01:24:22] trial  6/24 val MAE 3.427 (9s) {'hidden': (64,), 'alpha': 0.07883319022634068, 'lr': 0.0015287277839931552, 'batch_size': 128, 'activation': 'tanh'}
+[01:24:59] trial  7/24 val MAE 3.468 (37s) {'hidden': (256, 128, 64), 'alpha': 0.24971411154923212, 'lr': 0.003551154518790674, 'batch_size': 256, 'activation': 'tanh'}
+[01:25:27] trial  8/24 val MAE 3.488 (27s) {'hidden': (128, 128, 64), 'alpha': 0.00047999363397243646, 'lr': 0.000898275190848737, 'batch_size': 256, 'activation': 'relu'}
+[01:26:08] trial  9/24 val MAE 3.383 (42s) {'hidden': (256, 128), 'alpha': 0.024585063612945497, 'lr': 0.002201238085333229, 'batch_size': 128, 'activation': 'relu'}
+[01:26:22] trial 10/24 val MAE 3.408 (14s) {'hidden': (64, 32), 'alpha': 0.0013816204521763225, 'lr': 0.0006586331542864065, 'batch_size': 128, 'activation': 'relu'}
+[01:26:53] trial 11/24 val MAE 3.476 (31s) {'hidden': (128, 128, 64), 'alpha': 0.0002849215305757601, 'lr': 0.000924670274896852, 'batch_size': 128, 'activation': 'relu'}
+[01:27:12] trial 12/24 val MAE 3.380 (19s) {'hidden': (128,), 'alpha': 0.022097797089064435, 'lr': 0.0008166062253555937, 'batch_size': 128, 'activation': 'tanh'}
+[01:27:54] trial 13/24 val MAE 3.670 (42s) {'hidden': (256, 128, 64), 'alpha': 0.001239604787414687, 'lr': 0.002918527043849704, 'batch_size': 512, 'activation': 'relu'}
+[01:28:32] trial 14/24 val MAE 3.347 (38s) {'hidden': (128, 128, 64), 'alpha': 0.002270776162708302, 'lr': 0.0005054280558023886, 'batch_size': 128, 'activation': 'tanh'}
+[01:29:30] trial 15/24 val MAE 3.514 (58s) {'hidden': (256, 128, 64), 'alpha': 0.0005008165921067118, 'lr': 0.00020431825822295424, 'batch_size': 128, 'activation': 'tanh'}
+[01:29:46] trial 16/24 val MAE 3.483 (16s) {'hidden': (128, 128, 64), 'alpha': 0.021231368983765177, 'lr': 0.0019374545800056803, 'batch_size': 128, 'activation': 'tanh'}
+[01:30:47] trial 17/24 val MAE 3.432 (61s) {'hidden': (256, 128), 'alpha': 0.009785751562483949, 'lr': 0.00031312359706375836, 'batch_size': 256, 'activation': 'relu'}
+[01:31:28] trial 18/24 val MAE 3.314 (42s) {'hidden': (64,), 'alpha': 0.021847933551503856, 'lr': 0.0009110342168096372, 'batch_size': 512, 'activation': 'tanh'}
+[01:31:48] trial 19/24 val MAE 3.334 (19s) {'hidden': (64,), 'alpha': 0.016653829726791743, 'lr': 0.001188532771113485, 'batch_size': 512, 'activation': 'relu'}
+[01:32:47] trial 20/24 val MAE 3.606 (59s) {'hidden': (256, 128), 'alpha': 0.0011583114335146439, 'lr': 0.00022036619271999678, 'batch_size': 256, 'activation': 'relu'}
+[01:32:54] trial 21/24 val MAE 3.396 (8s) {'hidden': (64, 32), 'alpha': 0.0026906069089090265, 'lr': 0.0031243832623271592, 'batch_size': 128, 'activation': 'relu'}
+[01:33:36] trial 22/24 val MAE 3.431 (42s) {'hidden': (128,), 'alpha': 0.00015997775424790383, 'lr': 0.000494239496847096, 'batch_size': 512, 'activation': 'relu'}
+[01:34:16] trial 23/24 val MAE 3.324 (40s) {'hidden': (256, 128), 'alpha': 0.008904561406712157, 'lr': 0.0024972239574954066, 'batch_size': 256, 'activation': 'tanh'}
+[01:34:49] trial 24/24 val MAE 3.379 (33s) {'hidden': (256, 128, 64), 'alpha': 0.0026445635943095186, 'lr': 0.002751873959108139, 'batch_size': 128, 'activation': 'relu'}
+[01:34:49] best config: {'hidden': (64,), 'alpha': 0.021847933551503856, 'lr': 0.0009110342168096372, 'batch_size': 512, 'activation': 'tanh'}
+[01:35:54] ANN v5: + hyperparameter search    val MAE 3.282 | test MAE 3.346 | test R2 0.8776
+[01:39:35] ANN v6: + 5-seed ensemble (final)  val MAE 3.266 | test MAE 3.323 | test R2 0.8790
+[01:39:35] saved model + metrics
